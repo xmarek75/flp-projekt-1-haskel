@@ -155,3 +155,10 @@ filterSpecParser =
 
 -- buildFilterSpec :: ??? -> FilterSpec
 -- buildFilterSpec ???
+buildFilterSpec :: [String] -> [String] -> [String] -> [String] -> [String] -> [String] -> FilterSpec
+buildFilterSpec inc exc incCat incTag excCat excTag =
+  FilterSpec
+    { fsIncludes = map ByAny inc ++ map ByCategory incCat ++ map ByTag incTag,
+      fsExcludes = map ByAny exc ++ map ByCategory excCat ++ map ByTag excTag,
+      fsUseRegex = False -- Set to True if implementing regex matching
+    } 
