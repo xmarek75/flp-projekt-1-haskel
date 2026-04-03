@@ -1,0 +1,304 @@
+{
+  "discovered_test_cases": [
+    {
+      "category": "BASIC",
+      "description": "This test will pass",
+      "expected_interpreter_exit_codes": [
+        0,
+        42
+      ],
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_stdout_file": null,
+      "name": "ex1",
+      "points": 2,
+      "stdin_file": null,
+      "tags": [
+        "easy",
+        "mustwork"
+      ],
+      "test_source_path": "example_sol_tests/ex1.test",
+      "test_type": 2
+    },
+    {
+      "category": "BASIC",
+      "description": "This test will also pass",
+      "expected_interpreter_exit_codes": [
+        0,
+        42
+      ],
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_stdout_file": null,
+      "name": "ex4",
+      "points": 2,
+      "stdin_file": null,
+      "tags": [
+        "easy",
+        "mustwork"
+      ],
+      "test_source_path": "example_sol_tests/ex4.test",
+      "test_type": 2
+    },
+    {
+      "category": "SADGE",
+      "description": "This test will not pass (invalid interpreter exit code)",
+      "expected_interpreter_exit_codes": [
+        0,
+        42
+      ],
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_stdout_file": null,
+      "name": "ex5",
+      "points": 2,
+      "stdin_file": null,
+      "tags": [
+        "easy",
+        "mustwork"
+      ],
+      "test_source_path": "example_sol_tests/ex5.test",
+      "test_type": 2
+    },
+    {
+      "category": "SADGE",
+      "description": "This test will not pass (invalid interpreter output)",
+      "expected_interpreter_exit_codes": [
+        0,
+        42
+      ],
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_stdout_file": "example_sol_tests/ex6.out",
+      "name": "ex6",
+      "points": 2,
+      "stdin_file": null,
+      "tags": [
+        "easy",
+        "mustwork"
+      ],
+      "test_source_path": "example_sol_tests/ex6.test",
+      "test_type": 2
+    },
+    {
+      "category": "SADGE",
+      "description": "This test passes",
+      "expected_interpreter_exit_codes": [
+        0
+      ],
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_stdout_file": "example_sol_tests/ex7.out",
+      "name": "ex7",
+      "points": 2,
+      "stdin_file": null,
+      "tags": [
+        "easy",
+        "mustwork"
+      ],
+      "test_source_path": "example_sol_tests/ex7.test",
+      "test_type": 2
+    },
+    {
+      "category": "SADGE",
+      "description": "This is a passing parse-only test",
+      "expected_interpreter_exit_codes": null,
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_stdout_file": null,
+      "name": "ex8",
+      "points": 121,
+      "stdin_file": null,
+      "tags": [],
+      "test_source_path": "example_sol_tests/ex8.test",
+      "test_type": 0
+    },
+    {
+      "category": "SADGE",
+      "description": "This is a failing parse-only test",
+      "expected_interpreter_exit_codes": null,
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_stdout_file": null,
+      "name": "ex9",
+      "points": 121,
+      "stdin_file": null,
+      "tags": [],
+      "test_source_path": "example_sol_tests/ex9.test",
+      "test_type": 0
+    },
+    {
+      "category": "BASIC",
+      "description": "This test uses input, it will pass",
+      "expected_interpreter_exit_codes": [
+        0
+      ],
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_stdout_file": "example_sol_tests/ex10.out",
+      "name": "ex10",
+      "points": 10,
+      "stdin_file": "example_sol_tests/ex10.in",
+      "tags": [],
+      "test_source_path": "example_sol_tests/ex10.test",
+      "test_type": 2
+    },
+    {
+      "category": "BASIC",
+      "description": "This test uses input, it will not pass",
+      "expected_interpreter_exit_codes": [
+        0
+      ],
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_stdout_file": "example_sol_tests/ex11.out",
+      "name": "ex11",
+      "points": 10,
+      "stdin_file": "example_sol_tests/ex11.in",
+      "tags": [],
+      "test_source_path": "example_sol_tests/ex11.test",
+      "test_type": 2
+    }
+  ],
+  "results": {
+    "BASIC": {
+      "passed_points": 14,
+      "test_results": {
+        "ex1": {
+          "diff_output": null,
+          "interpreter_exit_code": 0,
+          "interpreter_stderr": "",
+          "interpreter_stdout": "",
+          "parser_exit_code": 0,
+          "parser_stderr": "",
+          "parser_stdout": "0\n",
+          "result": "passed"
+        },
+        "ex10": {
+          "diff_output": null,
+          "interpreter_exit_code": 0,
+          "interpreter_stderr": "",
+          "interpreter_stdout": "this one has an input!\n",
+          "parser_exit_code": 0,
+          "parser_stderr": "",
+          "parser_stdout": "0\nthis is rather ignored\n",
+          "result": "passed"
+        },
+        "ex11": {
+          "diff_output": "1a2\n> but its output is wrong :(\n",
+          "interpreter_exit_code": 0,
+          "interpreter_stderr": "",
+          "interpreter_stdout": "this one has an input!\n",
+          "parser_exit_code": 0,
+          "parser_stderr": "",
+          "parser_stdout": "0\nthis is rather ignored\n",
+          "result": "diff_fail"
+        },
+        "ex4": {
+          "diff_output": null,
+          "interpreter_exit_code": 42,
+          "interpreter_stderr": "",
+          "interpreter_stdout": "",
+          "parser_exit_code": 0,
+          "parser_stderr": "",
+          "parser_stdout": "42\n",
+          "result": "passed"
+        }
+      },
+      "total_points": 24
+    },
+    "SADGE": {
+      "passed_points": 123,
+      "test_results": {
+        "ex5": {
+          "diff_output": null,
+          "interpreter_exit_code": 14,
+          "interpreter_stderr": "",
+          "interpreter_stdout": "",
+          "parser_exit_code": 0,
+          "parser_stderr": "",
+          "parser_stdout": "14\ni am so SADGE\n",
+          "result": "int_fail"
+        },
+        "ex6": {
+          "diff_output": "1c1\n< i am so SADGE\n---\n> i am so happy\n",
+          "interpreter_exit_code": 0,
+          "interpreter_stderr": "",
+          "interpreter_stdout": "i am so SADGE\n",
+          "parser_exit_code": 0,
+          "parser_stderr": "",
+          "parser_stdout": "0\ni am so SADGE\n",
+          "result": "diff_fail"
+        },
+        "ex7": {
+          "diff_output": null,
+          "interpreter_exit_code": 0,
+          "interpreter_stderr": "",
+          "interpreter_stdout": "i am so SADGE\n",
+          "parser_exit_code": 0,
+          "parser_stderr": "",
+          "parser_stdout": "0\ni am so SADGE\n",
+          "result": "passed"
+        },
+        "ex8": {
+          "diff_output": null,
+          "interpreter_exit_code": null,
+          "interpreter_stderr": null,
+          "interpreter_stdout": null,
+          "parser_exit_code": 0,
+          "parser_stderr": "",
+          "parser_stdout": "asasdasdas\n",
+          "result": "passed"
+        },
+        "ex9": {
+          "diff_output": null,
+          "interpreter_exit_code": null,
+          "interpreter_stderr": null,
+          "interpreter_stdout": null,
+          "parser_exit_code": 11,
+          "parser_stderr": "",
+          "parser_stdout": "",
+          "result": "parse_fail"
+        }
+      },
+      "total_points": 248
+    }
+  },
+  "stats": {
+    "category_success_rate_histogram": {
+      "0.0": 0,
+      "0.1": 0,
+      "0.2": 0,
+      "0.3": 0,
+      "0.4": 1,
+      "0.5": 0,
+      "0.6": 0,
+      "0.7": 1,
+      "0.8": 0,
+      "0.9": 0
+    },
+    "total_found_test_files": 11,
+    "total_loaded_tests": 9,
+    "total_passed_tests": 5,
+    "total_selected_tests": 9
+  },
+  "unexecuted": {
+    "ex2": {
+      "code": 1,
+      "message": "Missing required field: +++ (category)"
+    },
+    "ex3": {
+      "code": 2,
+      "message": "Cannot determine test type: no !C! or !I! codes specified"
+    }
+  }
+}

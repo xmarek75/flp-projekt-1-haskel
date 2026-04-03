@@ -1,0 +1,11 @@
++++ BASIC
+*** This test will also pass
+--- easy
+--- mustwork
+!C! 0
+!I! 0
+!I! 42
+>>> 2
+
+0
+42

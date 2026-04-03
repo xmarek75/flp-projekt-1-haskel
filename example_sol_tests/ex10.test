@@ -1,0 +1,9 @@
++++ BASIC
+*** This test uses input, it will pass
+!C! 0
+!I! 0
+>>> 10
+
+0
+0
+this is rather ignored

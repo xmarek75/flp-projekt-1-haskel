@@ -1,0 +1,69 @@
+cabal-version:      3.4
+name:               flp-fun
+version:            0.1.0.0
+synopsis:           Testing tool for SOL26 interpreters (FLP 2025/26)
+description:
+  A command-line tool that discovers, filters, and executes test cases for
+  the IPP course SOL26 parser and interpreter, producing a structured JSON report.
+license:            BSD-3-Clause
+author:             xplagia0b
+build-type:         Simple
+
+tested-with:
+  , GHC == 9.6.7
+
+common base-cfg
+  ghc-options: -Wall
+  default-language: GHC2021
+
+-- Internal library exposing all modules for testing
+library flp-fun-lib
+  import:           base-cfg
+  hs-source-dirs:   src
+  exposed-modules:
+    SOLTest.Types
+    SOLTest.CLI
+    SOLTest.Parser
+    SOLTest.Discovery
+    SOLTest.Filter
+    SOLTest.Executor
+    SOLTest.Report
+    SOLTest.JSON
+  build-depends:
+    , base             >= 4.18 && < 5
+    , aeson            >= 2.1  && < 2.3
+    , bytestring       >= 0.11 && < 0.13
+    , containers       >= 0.6  && < 0.8
+    , directory        >= 1.3  && < 1.4
+    , filepath         >= 1.4  && < 1.6
+    , optparse-applicative >= 0.17 && < 0.19
+    , process          >= 1.6  && < 1.7
+    , temporary        >= 1.3  && < 1.4
+
+executable flp-fun
+  import:           base-cfg
+  main-is:          Main.hs
+  hs-source-dirs:   app
+  build-depends:
+    , base        >= 4.18 && < 5
+    , aeson       >= 2.1  && < 2.3
+    , bytestring  >= 0.11 && < 0.13
+    , containers  >= 0.6  && < 0.8
+    , directory   >= 1.3  && < 1.4
+    , flp-fun:flp-fun-lib
+
+test-suite flp-fun-tests
+  import:           base-cfg
+  type:             exitcode-stdio-1.0
+  main-is:          Spec.hs
+  hs-source-dirs:   test
+  other-modules:
+    SOLTest.Generators
+    SOLTest.ParserSpec
+    SOLTest.FilterSpec
+    SOLTest.ReportSpec
+  build-depends:
+    , base        >= 4.18 && < 5
+    , containers  >= 0.6  && < 0.8
+    , QuickCheck  >= 2.14 && < 2.16
+    , flp-fun:flp-fun-lib

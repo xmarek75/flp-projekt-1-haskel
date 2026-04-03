@@ -1,0 +1,12 @@
++++ SADGE
+*** This test will not pass (invalid interpreter exit code)
+--- easy
+--- mustwork
+!C! 0
+!I! 0
+!I! 42
+>>> 2
+
+0
+14
+i am so SADGE

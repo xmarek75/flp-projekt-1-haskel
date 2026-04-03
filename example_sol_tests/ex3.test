@@ -1,0 +1,6 @@
+*** This is a slightly less malformed test file - it looks fine but doesn't have the necessary return codes
++++ BASIC
+>>> 2
+
+0
+0
