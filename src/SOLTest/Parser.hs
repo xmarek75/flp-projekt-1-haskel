@@ -81,7 +81,7 @@ splitHeaderBody :: String -> ([String], String)
 splitHeaderBody content = 
   let lines' = lines content
       (hdrLines, otherLines) = break (all isSpace) lines'
-      bodyLines = dropWhile (all isSpace) otherLines
+      bodyLines = drop 1 otherLines 
    in (hdrLines, unlines bodyLines)
    
 
@@ -101,7 +101,27 @@ parseHeaderLine hdr line
   | "*** " `isPrefixOf` line =
       let val = trim (drop 4 line)
        in Right hdr {phDescription = Just val}
-  -- ???
+  | "+++ " `isPrefixOf` line =
+      let val = trim (drop 4 line)
+        in Right hdr {phCategory = Just val}
+  | "--- " `isPrefixOf` line =
+      let val = trim (drop 4 line)
+        in Right hdr {phTags = phTags hdr ++ [val]}
+  | ">>> " `isPrefixOf` line =
+      let val = trim (drop 4 line)
+        in case reads val of
+              [(n, "")] -> Right hdr {phWeight = Just n}
+              _ -> Left ("invalid Int value " ++ val)
+  | "!C! " `isPrefixOf` line =
+      let val = trim (drop 4 line)
+        in case reads val of
+              [(n, "")] -> Right hdr {phParserCodes = phParserCodes hdr ++ [n]}
+              _ -> Left ("invalid Int value " ++ val)
+  | "!I! " `isPrefixOf` line =
+      let val = trim (drop 4 line)
+        in case reads val of
+              [(n, "")] -> Right hdr {phInterpreterCodes = phInterpreterCodes hdr ++ [n]}
+              _ -> Left ("invalid Int value " ++ val)
   | otherwise = Right hdr -- unknown or comment line: skip
 
 -- | Parse all header lines into a 'ParsedHeader'.
