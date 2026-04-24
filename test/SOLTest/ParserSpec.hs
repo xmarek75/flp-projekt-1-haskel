@@ -7,14 +7,26 @@ where
 import Data.Maybe (isJust, isNothing)
 import SOLTest.Generators (SafeString (..), genValidTestFileContent)
 import SOLTest.Parser
-    ( determineTestType,
-      emptyHeader,
-      parseHeaderLine,
-      splitHeaderBody,
-      ParsedHeader(phParserCodes, phDescription, phCategory, phTags,
-                   phWeight, phInterpreterCodes) )
+  ( ParsedHeader
+      ( phCategory,
+        phDescription,
+        phInterpreterCodes,
+        phParserCodes,
+        phTags,
+        phWeight
+      ),
+    determineTestType,
+    emptyHeader,
+    parseHeader,
+    parseHeaderLine,
+    parseTestFile,
+    splitHeaderBody,
+  )
 import SOLTest.Types
-    ( TestCaseType(Combined, ParseOnly, ExecuteOnly) )
+  ( TestCaseDefinition (..),
+    TestCaseFile (..),
+    TestCaseType (..),
+  )
 import Test.QuickCheck
 
 -- ===========================================================================
