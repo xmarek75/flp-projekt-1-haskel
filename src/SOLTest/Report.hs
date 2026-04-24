@@ -153,7 +153,18 @@ computeStats foundCount loadedCount selectedCount mCategoryResults =
 --
 -- FLP: Implement this function.
 computeHistogram :: Map String CategoryReport -> Map String Int
-computeHistogram categories = undefined
+computeHistogram = 
+  Map.foldl' addCategory emptyHistogram
+  where
+    emptyHistogram = Map.fromList [(rateToBin (fromIntegral i / 10), 0) | i <- [0..9]]
+    addCategory hist categoryReport =
+      let reports = crTestResults categoryReport
+          totalTests = Map.size reports
+          passedTests = 
+            length [() | testReport <- Map.elems reports, tcrResult testReport == Passed]
+          rate = if totalTests == 0 then 0 else fromIntegral passedTests / fromIntegral totalTests
+          bin = rateToBin rate
+      in Map.insertWith (+) bin 1 hist
 
 -- | Map a pass rate in @[0, 1]@ to a histogram bin key.
 --
