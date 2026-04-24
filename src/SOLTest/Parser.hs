@@ -78,7 +78,12 @@ emptyHeader =
 --
 -- FLP: Implement this function.
 splitHeaderBody :: String -> ([String], String)
-splitHeaderBody content = undefined
+splitHeaderBody content = 
+  let lines' = lines content
+      (hdrLines, otherLines) = break (all isSpace) lines'
+      bodyLines = dropWhile (all isSpace) otherLines
+   in (hdrLines, unlines bodyLines)
+   
 
 -- ---------------------------------------------------------------------------
 -- Header line parsing
@@ -190,7 +195,18 @@ parseTestFile tcf content = do
 --
 -- FLP: Implement this function.
 buildExitCodes :: TestCaseType -> ParsedHeader -> (Maybe [Int], Maybe [Int])
-buildExitCodes = undefined
+buildExitCodes testType hdr =
+  case testType of
+    ParseOnly -> (Just (phParserCodes hdr), Nothing)
+    ExecuteOnly -> (Nothing, Just (phInterpreterCodes hdr))
+    Combined ->
+      (case phParserCodes hdr of
+         [] -> Nothing
+         cs -> Just cs,
+       Just (phInterpreterCodes hdr)
+      )
+      
+
 
 -- ---------------------------------------------------------------------------
 -- Utilities

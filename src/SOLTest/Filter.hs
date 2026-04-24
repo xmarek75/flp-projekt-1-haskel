@@ -36,7 +36,17 @@ filterTests ::
   FilterSpec ->
   [TestCaseDefinition] ->
   ([TestCaseDefinition], [TestCaseDefinition])
-filterTests spec tests = undefined
+filterTests spec tests = (selected, filteredOut)
+  where
+    useRegex = fsUseRegex spec
+    includes = fsIncludes spec
+    excludes = fsExcludes spec
+
+    passesInclude test = null includes || matchesAny useRegex includes test
+    passesExclude test = not (matchesAny useRegex excludes test)
+    isSelected test = passesInclude test && passesExclude test
+    selected = filter isSelected tests
+    filteredOut = filter (not . isSelected) tests
 
 -- | Check whether a test matches at least one criterion in the list.
 matchesAny :: Bool -> [FilterCriterion] -> TestCaseDefinition -> Bool
@@ -53,7 +63,16 @@ matchesAny useRegex criteria test =
 -- bonus extension, you can either remove the first argument and update the usages,
 -- or you can simply ignore the value.
 matchesCriterion :: Bool -> TestCaseDefinition -> FilterCriterion -> Bool
-matchesCriterion useRegex test criterion = undefined
+matchesCriterion useRegex test criterion = 
+  case criterion of
+    ByAny value -> tcdName test == value 
+      || tcdCategory test == value
+      || hasMatchingTag value
+    ByCategory value -> tcdCategory test == value
+    ByTag value -> hasMatchingTag value
+  where
+    hasMatchingTag value = 
+      any (== value) (tcdTags test)
 
 -- | Trim leading and trailing whitespace from a filter identifier.
 trimFilterId :: String -> String
