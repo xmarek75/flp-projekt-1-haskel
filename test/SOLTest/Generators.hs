@@ -21,6 +21,7 @@ import SOLTest.Types
       FilterCriterion(..),
       FilterSpec(..),
       TestCaseDefinition(..),
+      TestCaseFile (..),
       TestCaseReport(..),
       TestCaseType(..),
       TestResult(..) )
