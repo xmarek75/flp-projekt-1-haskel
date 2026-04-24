@@ -11,7 +11,7 @@ module SOLTest.Report
     rateToBin
   )
 where
-
+import qualified Data.Map.Strict as Map
 import Data.Map.Strict (Map)
 import SOLTest.Types
 
@@ -62,7 +62,41 @@ groupByCategory ::
   [TestCaseDefinition] ->
   Map String TestCaseReport ->
   Map String CategoryReport
-groupByCategory definitions results = undefined
+groupByCategory definitions results = 
+  let defMap = Map.fromList [(tcdName def, def) | def <- definitions]
+      updateCategoryReport categoryReports testName testReport =
+        case Map.lookup testName defMap of
+          Just def ->
+            let category = tcdCategory def
+                points = tcdPoints def
+                passedPoints =
+                  if tcrResult testReport == Passed
+                    then points
+                    else 0
+                newReport =
+                  CategoryReport
+                    { crTotalPoints = points,
+                      crPassedPoints = passedPoints,
+                      crTestResults = Map.singleton testName testReport
+                    }
+             in Map.insertWith
+                  mergeReports
+                  category
+                  newReport
+                  categoryReports
+          Nothing ->
+            categoryReports
+
+      mergeReports new old =
+        CategoryReport
+          { crTotalPoints = crTotalPoints old + crTotalPoints new,
+            crPassedPoints = crPassedPoints old + crPassedPoints new,
+            crTestResults = Map.union (crTestResults old) (crTestResults new)
+          }
+   in Map.foldlWithKey' updateCategoryReport Map.empty results
+
+          
+      
 
 -- ---------------------------------------------------------------------------
 -- Statistics
@@ -81,7 +115,27 @@ computeStats ::
   -- | Category reports (Nothing in dry-run mode).
   Maybe (Map String CategoryReport) ->
   TestStats
-computeStats foundCount loadedCount selectedCount mCategoryResults = undefined
+computeStats foundCount loadedCount selectedCount mCategoryResults = 
+  let categoryResults = maybe Map.empty id mCategoryResults
+      passedTests =
+        sum 
+          [
+            length
+            [
+              ()
+              | testReport <- Map.elems (crTestResults categoryReport),
+                tcrResult testReport == Passed
+            ]
+            | categoryReport <- Map.elems categoryResults
+          ] 
+      histogram = maybe Map.empty computeHistogram mCategoryResults  
+  in TestStats
+    {tsFoundTestFiles = foundCount,
+     tsLoadedTests = loadedCount,
+     tsSelectedTests = selectedCount,
+     tsPassedTests = passedTests,
+     tsHistogram = histogram
+    }
 
 -- ---------------------------------------------------------------------------
 -- Histogram
